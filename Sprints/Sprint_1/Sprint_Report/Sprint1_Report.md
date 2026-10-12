@@ -32,6 +32,7 @@ Here are the issues completed during Sprint 1:
 
 * [Requirement Gathering](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/issues/7)
 * [Access to member only corpora](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/issues/2)
+* [CITI Privacy Certification](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/issues/9) 
 
 Both completed issues were assigned to all four team members.
 
