@@ -6,38 +6,38 @@
 
 ### One-sentence description of the project
 
-TODO: A 20-second elevator pitch of your project - its core idea summarized in one sentence.
+Our project aims to improve AI speaker segmentation models to more accurately identify children's speech in audio recordings, making early childhood speech research more efficient.
 
 ### Additional information about the project
 
-TODO: Write a compelling/creative/informative project description / summary
+AI speaker segmentation models struggle to accurately distinguish young children's voices from adult voices. This makes it harder to have accurate analysis of recordings from HomeBank. HomeBank is where all of the audio recordings are stored from past experiments that have been done. Our project focuses on improving the existing AI models to identify and separate different speakers in audio recordings, especially the young children speaking in those recordings. Our team will evaluate and fine-tune models to improve their accuracy and performance. Our goal is to reduce the need for manual audio analysis and help researchers better understand childhood speech.
 
 ## Installation
 
 ### Prerequisites
-
-TODO: List what a user needs to have installed before running the installation instructions below (e.g., git, which versions of Ruby/Rails)
+- Needs to have all 3 python programs downloaded provided from the git repository provided by Joe Dumoulin
 
 ### Add-ons
 
-TODO: List which add-ons are included in the project, and the purpose each add-on serves in your app.
+- Required to have access to HomeBank to view the recordings
 
 ### Installation Steps
 
-TODO: Describe the installation process (making sure you mention `bundle install`).
-Instructions need to be such that a user can just copy/paste the commands to get things set up and running. 
-
+- Download and install python version 3
+- Clone the GitHub repository
+- Run the python program needed depending on what end results are wanted fro the data 
 
 ## Functionality
 
-TODO: Write usage instructions. Structuring it as a walkthrough can help structure this section,
-and showcase your features.
-
+- Python program runs
+- Excel sheet is exported
+- audio recordings are organized with the participants identified
 
 ## Known Problems
 
-TODO: Describe any known issues, bugs, odd behaviors or code smells. 
-Provide steps to reproduce the problem and/or name a file or a function where the problem lives.
+- We still have to manually insert some information into the excel sheet because not all of the information correctly is identified from the audio recordings
+- Understanding the data and recordings that we are presented with and make sure that privacy is HIGHLY taken into account
+- Understanding and comparing the metric data from previous research done 
 
 
 ## Contributing
