@@ -1,6 +1,7 @@
 # Sprint 1 Report (September 1st to October 11th)
 
 ## YouTube link of Sprint * Video (Make this video unlisted)
+https://youtu.be/0ZN6XFm5m60?is=nW1GyMijwwuX9n-D 
 
 ## What's New (User Facing)
  * Completed initial requirements gathering with the client and identified the main goals and expected functionality of the speaker segmentation system.
