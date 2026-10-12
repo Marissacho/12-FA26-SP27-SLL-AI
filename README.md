@@ -1,7 +1,5 @@
 # 12-FA26-SP27-SLL-AI
 
-# Project Name
-
 ## Project summary
 
 ### One-sentence description of the project
