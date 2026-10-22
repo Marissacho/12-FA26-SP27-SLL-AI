@@ -1,1 +1,12 @@
+# Python environment
+.venv/
+__pycache__/
 
+# Never commit data or model outputs
+data/
+*.wav
+*.mp3
+*.its
+*.cha
+*.part
+checkpoints/
