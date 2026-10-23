@@ -13,7 +13,7 @@ AI speaker segmentation models struggle to accurately distinguish young children
 ## Installation
 
 ### Prerequisites
-- Needs to have all 3 python programs downloaded provided from the git repository provided by Joe Dumoulin
+- Must have access to compute power large enough to train a ML Model.
 
 ### Add-ons
 
@@ -21,9 +21,26 @@ AI speaker segmentation models struggle to accurately distinguish young children
 
 ### Installation Steps
 
-- Download and install python version 3
 - Clone the GitHub repository
-- Run the python program needed depending on what end results are wanted fro the data 
+- Create python environment and install dependencies.
+  ```bash
+  python3 -m venv .venv
+  source .venv/bin/activate
+  pip install -r requirements.txt
+  ```
+
+#### Steps to run data_preparation scripts
+
+##### talkbank_audio_scrapper
+```bash
+python data_preparation/talkbank_audio_scrapper.py homebank Password/<Corpus> --list #to check the size of a corpus
+python data_preparation/talkbank_audio_scrapper.py homebank Password/<Corpus> #to download a corpus
+```
+
+##### talkbank_transcript_scrapper
+```bash
+python data_preparation/talkbank_transcript_scrapper.py homebank Password/<Corpus>
+```
 
 ## Functionality
 
