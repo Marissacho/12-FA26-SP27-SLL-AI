@@ -29,8 +29,9 @@ with open(IN_PATH_CSV) as fd:
         cha_speaker = cha_speaker_pattern.match(row[0])[0]
         vtc_speaker = row[1].strip()
         # fix #4: stop on blank or misspelled labels instead of copying them into the RTTMs
-        if vtc_speaker not in ("KCHI", "OCH", "FEM", "MAL"):
-            sys.exit(f"Bad label {row[1]!r} for '{row[0]}' in {IN_PATH_CSV}. Use KCHI, OCH, FEM, or MAL.")
+        # (SIL = not a real speaker; map_cha_to_rttm.py leaves those segments out)
+        if vtc_speaker not in ("KCHI", "OCH", "FEM", "MAL", "SIL"):
+            sys.exit(f"Bad label {row[1]!r} for '{row[0]}' in {IN_PATH_CSV}. Use KCHI, OCH, FEM, MAL, or SIL.")
 
         for cha in get_file_list(row[2]):
             if cha not in ctov_map:

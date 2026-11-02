@@ -89,6 +89,8 @@ for pth in files:
                 if rttm_speaker is None:  # fix #6: warn and skip instead of crashing
                     print(f"WARNING: {cha_filename}: speaker {speaker} isn't in the speaker map, skipped")
                     continue
+                if rttm_speaker == "SIL":  # mapped as not a real speaker: leave it out
+                    continue
                 #print(rttm_speaker)
                 cha_segs.append([rttm_speaker, start_sp, duration])
 
