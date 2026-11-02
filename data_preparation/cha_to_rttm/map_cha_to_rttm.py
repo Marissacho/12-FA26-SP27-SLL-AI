@@ -7,12 +7,20 @@ import os.path
 import json
 import csv
 import itertools
+import sys
+import tomllib
 
-BASE_PATH = "/media/joe/slepnir1/Datasets/ALSSA/VanDam-5minute"
-CHA_BASE_PATH = os.path.join(BASE_PATH, "VanDam-5minute")
+# Usage: python <this script> configs/corpora/<Corpus>.toml
+with open(sys.argv[1], "rb") as cfg_fd:
+    CONFIG = tomllib.load(cfg_fd)
+
+BASE_PATH = CONFIG["paths"]["output"]
+CHA_BASE_PATH = CONFIG["paths"]["transcripts"]
 MAP_PATH = os.path.join(BASE_PATH, "cha_file_to_speakers.json")
 
 def compress_list_rows(lst):
+    if not lst:  # fix #5: a file with no timed utterances
+        return
     last = len(lst)-1
 
     i = 0
@@ -20,8 +28,10 @@ def compress_list_rows(lst):
     while i < last:
         i += 1
         nxt = lst[i]
-        if current[0] == nxt[0]:
-            current[2] += nxt[2]
+        # fix #2: merge only when the next segment touches or overlaps this one,
+        # and end the merged segment where the later one ends
+        if current[0] == nxt[0] and nxt[1] <= current[1] + current[2]:
+            current[2] = round(max(current[1] + current[2], nxt[1] + nxt[2]) - current[1], 3)
         else:
             yield current
             current = nxt
@@ -37,30 +47,35 @@ def str_to_decimal(str):
     return float(str)/1000 # the string is in milliseconds
 
 def safe_mkdir(pth):
-    if not os.path.isdir(pth):
-        os.mkdir(pth)
+    os.makedirs(pth, exist_ok=True)  # also creates nested folders
     return pth
 
 # create the output directory for rttm if it doesn't exist
 OUT_PATH = safe_mkdir(os.path.join(BASE_PATH, "rttm"))
 
-pattern = re.compile(r"\*([A-Z0-9]+).+\x15(\d+_\d+)") # cha speech segment pattern. x15 is a control character in the cha file (ctrl-U)
+pattern = re.compile(CONFIG["regex"]["utterance"]) # cha speech segment pattern. x15 is a control character in the cha file (ctrl-U)
 
-files = glob.glob(BASE_PATH + '/**/*.cha', recursive=True)
+files = glob.glob(CHA_BASE_PATH + '/**/*.cha', recursive=True)
 
 sp_map = read_speaker_map(MAP_PATH)
 cha_speakers = {}
 for pth in files:
-    cha_filename = os.path.split(pth)[1]
-    cha_dir = cha_filename[0:4]
-    cha_name = os.path.splitext(cha_filename)[0]
+    # fix #1: use the file's folder inside the transcripts folder, not filename[0:4]
+    cha_filename = os.path.relpath(pth, CHA_BASE_PATH)
+    cha_dir = os.path.dirname(cha_filename)
+    cha_name = os.path.splitext(os.path.basename(cha_filename))[0]
+    # older speaker maps list bare file names, so fall back to the name alone
+    file_map = sp_map.get(cha_filename, sp_map.get(os.path.basename(cha_filename), {}))
     # make sure the write directory esists
     rttm_dir = safe_mkdir(os.path.join(OUT_PATH, cha_dir))
 
     #read the list of speech segments from the .cha file
     cha_segs = []
     with open(pth, "r") as rfd:
-        for line in rfd:
+        # fix #3: join continuation lines (they start with a tab) onto their utterance,
+        # so a time bullet on the second line isn't missed
+        text = rfd.read().replace("\r\n", "\n").replace("\n\t", " ")
+        for line in text.split("\n"):
             m = pattern.match(line)
             if m is not None:
                 speaker = m[1]
@@ -70,7 +85,10 @@ for pth in files:
                 duration = round(end_sp - start_sp, 3)
                 #print(speaker, start_sp, duration)
 
-                rttm_speaker = sp_map[cha_filename][speaker]
+                rttm_speaker = file_map.get(speaker)
+                if rttm_speaker is None:  # fix #6: warn and skip instead of crashing
+                    print(f"WARNING: {cha_filename}: speaker {speaker} isn't in the speaker map, skipped")
+                    continue
                 #print(rttm_speaker)
                 cha_segs.append([rttm_speaker, start_sp, duration])
 
@@ -88,7 +106,3 @@ for pth in files:
                 line = f"SPEAKER {cha_name} 1 {start:4.3f} {duration:4.3f} <NA> <NA> {speaker} <NA> <NA>\n"
                 rttm.write(line)
                 print(line)
-
-
-
-

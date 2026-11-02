@@ -8,21 +8,28 @@ import re
 import os.path
 import json
 import csv
+import sys
+import tomllib
+
+# Usage: python <this script> configs/corpora/<Corpus>.toml
+with open(sys.argv[1], "rb") as cfg_fd:
+    CONFIG = tomllib.load(cfg_fd)
 
 ########################### CONFIGURATION
-BASE_PATH = "/media/joe/slepnir1/Datasets/ALSSA/VanDam-5minute/VanDam-5minute"
-OUT_BASE_PATH = "/media/joe/slepnir1/Datasets/ALSSA/VanDam-5minute"
+BASE_PATH = CONFIG["paths"]["transcripts"]
+OUT_BASE_PATH = CONFIG["paths"]["output"]
+os.makedirs(OUT_BASE_PATH, exist_ok=True)
 OUT_PATH_JSONL = os.path.join(OUT_BASE_PATH, "cha_speakers.jsonl")
 OUT_PATH_CSV = os.path.join(OUT_BASE_PATH, "cha_to_vtc2_speaker_map.csv")
 
-pattern = re.compile(r"(.+)eng\|VanDam-5minute\|([A-Z0-9]+\|*.+)")
+pattern = re.compile(CONFIG["regex"]["speaker_id"])
 replace = re.compile(r"\|+")
 
 files = glob.glob(BASE_PATH + '/**/*.cha', recursive=True)
 ###########################
 cha_speakers = {}
 for pth in files:
-    filename = os.path.split(pth)[1]
+    filename = os.path.relpath(pth, BASE_PATH)  # fix #1: keep the folder, since CHILDES reuses file names
     with open(pth, "r") as fd:
         for line in fd:
             m = pattern.match(line)
@@ -48,7 +55,3 @@ with open(OUT_PATH_CSV, "w") as fd:
     csv_file = csv.writer(fd, delimiter=',')
     for k, v in cha_speakers.items():
         csv_file.writerow([k, v])
-
-
-
-

@@ -1,0 +1,12 @@
+# TODO: confirm the folder names in [paths] match the server
+
+name = "Braunwald"
+
+[paths]
+transcripts = "/mnt/na1/eecs/srdesign/csar/data/raw/Braunwald/transcripts"
+output      = "/mnt/na1/eecs/srdesign/csar/data/processed/Braunwald"
+
+[regex]
+# TODO: fill in speaker_id from one .cha file's @ID lines, e.g.
+speaker_id = '(.+)eng\|Braunwald\|([A-Z0-9]+\|*.+)'
+utterance  = '\*([A-Z0-9]+).+\x15(\d+_\d+)'

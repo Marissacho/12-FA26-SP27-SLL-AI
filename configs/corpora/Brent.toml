@@ -1,0 +1,12 @@
+# TODO: confirm the folder names in [paths] match the server
+
+name = "Brent"
+
+[paths]
+transcripts = "/mnt/na1/eecs/srdesign/csar/data/raw/Brent/transcripts"
+output      = "/mnt/na1/eecs/srdesign/csar/data/processed/Brent"
+
+[regex]
+# TODO: fill in speaker_id from one .cha file's @ID lines, e.g.
+speaker_id = '(.+)eng\|Brent\|([A-Z0-9]+\|*.+)'
+utterance  = '\*([A-Z0-9]+).+\x15(\d+_\d+)'

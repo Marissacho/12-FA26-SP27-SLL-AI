@@ -1,0 +1,9 @@
+name = "VanDam-5minute"
+
+[paths]
+transcripts = "/mnt/na1/eecs/srdesign/csar/data/raw/VanDam-5minute/transcripts"
+output      = "/mnt/na1/eecs/srdesign/csar/data/processed/VanDam-5minute"
+
+[regex]
+speaker_id = '(.+)eng\|VanDam-5minute\|([A-Z0-9]+\|*.+)'
+utterance  = '\*([A-Z0-9]+).+\x15(\d+_\d+)'
