@@ -40,3 +40,22 @@ Please review the following code files, which were actively developed during thi
 [map_cha_to_rttm.py](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/blob/main/data_preparation/cha_to_rttm/map_cha_to_rttm.py) 
 [cha_vtc_map_by_file.py](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/blob/main/data_preparation/cha_to_rttm/cha_vtc_map_by_file.py) 
 [calculate_audio_hours.py](https://github.com/Marissacho/12-FA26-SP27-SLL-AI/blob/main/data_preparation/calculate_audio_hours.py) 
+ 
+
+Retrospective Summary 
+Here's what went well: 
+
+We obtained server space and every member can work in the same environment. 
+The data pipeline now runs from TalkBank download to reference .rttm files. 
+Configuration files let us add corpora without changing code. 
+We have 3000 hours of data in our server 
+Here's what we'd like to improve: 
+
+Assign milestones, story points, and assignees to every issue. 
+Start PyTorch earlier so it does not block fine-tuning. 
+Adjust dataset so that data that could cause problems is removed/watched carefully 
+Here are changes we plan to implement in the next sprint: 
+
+Identify and implement appropriate evaluation metrics to measure model performance 
+Begin training and testing the selected model using the available data 
+Use the evaluation results to identify areas for improvement and refine the model that we choose to move forward with  
