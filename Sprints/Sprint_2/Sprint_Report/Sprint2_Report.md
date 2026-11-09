@@ -1,6 +1,7 @@
 # Sprint 2 Report (October 12th to November 11th)
 
-## YouTube link of Sprint * Video (Make this video unlisted)
+## YouTube link of Sprint 2 Video (Make this video unlisted)
+https://youtu.be/eNskQ4exb7k
 
 ## What's New (User Facing)
  * Obtained server space for storing corpus data and fine-tuning models and set up remote access for every team member.
