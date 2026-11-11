@@ -134,6 +134,25 @@ uv sync --active
 python -c "import torch; print(torch.cuda.is_available(), torch.cuda.device_count())" #should print True 2
 ```
 
+#### Baseline model (VTC 2.2)
+
+Install ffmpeg into your home folder, then clone VTC into your home folder and check out the version this project uses:
+```bash
+mkdir -p ~/bin
+curl -Ls -o ~/bin/micromamba https://github.com/mamba-org/micromamba-releases/releases/latest/download/micromamba-linux-64
+chmod +x ~/bin/micromamba
+~/bin/micromamba create -y -p ~/ffmpeg-env -c conda-forge "ffmpeg>=4,<8"
+echo 'export PATH=~/ffmpeg-env/bin:$PATH' >> ~/.bashrc
+echo 'export LD_LIBRARY_PATH=~/ffmpeg-env/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
+source ~/.bashrc
+cd ~
+git clone https://github.com/LAAC-LSCP/VTC.git
+cd VTC
+git checkout 1e6901e180e63bf8793106fd9b8616de8af3fd61
+./check_sys_dependencies.sh #should show uv and ffmpeg installed
+uv sync
+```
+
 ## Functionality
 
 - Python program runs
